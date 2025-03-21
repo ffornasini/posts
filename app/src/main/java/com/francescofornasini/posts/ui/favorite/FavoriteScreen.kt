@@ -1,12 +1,12 @@
-package com.francescofornasini.posts.detail
+package com.francescofornasini.posts.ui.favorite
 
 import androidx.compose.runtime.Composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-object Detail
+object Favorite
 
 @Composable
-fun DetailScreen() {
-    DetailContent()
+fun FavoriteScreen() {
+    FavoriteContent()
 }

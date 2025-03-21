@@ -15,6 +15,8 @@ paging = "3.3.6"
 navigation = "2.8.9"
 serialization = "1.8.0"
 hiltNavigationCompose = "1.2.0"
+retrofit = "2.10.0"
+okhttp3Logging = "4.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,11 +37,15 @@ google-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref=
 google-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref="hilt" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref="room" }
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref="room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref="room" }
 androidx-paging = { group = "androidx.paging", name = "paging-runtime", version.ref="paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref="paging" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref="navigation" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+squareup-retrofit-serializer = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit"}
+squareup-okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3Logging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,4 +1,4 @@
-package com.francescofornasini.posts.detail
+package com.francescofornasini.posts.ui.detail
 
 import androidx.compose.runtime.Composable
 

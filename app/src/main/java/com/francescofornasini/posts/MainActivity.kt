@@ -11,12 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.francescofornasini.posts.detail.Detail
-import com.francescofornasini.posts.detail.DetailScreen
-import com.francescofornasini.posts.favorite.Favorite
-import com.francescofornasini.posts.favorite.FavoriteScreen
-import com.francescofornasini.posts.search.Search
-import com.francescofornasini.posts.search.SearchScreen
+import com.francescofornasini.posts.ui.detail.Detail
+import com.francescofornasini.posts.ui.detail.DetailScreen
+import com.francescofornasini.posts.ui.favorite.Favorite
+import com.francescofornasini.posts.ui.favorite.FavoriteScreen
+import com.francescofornasini.posts.ui.search.Search
+import com.francescofornasini.posts.ui.search.SearchScreen
 import com.francescofornasini.posts.ui.theme.PostsTheme
 import dagger.hilt.android.AndroidEntryPoint
 

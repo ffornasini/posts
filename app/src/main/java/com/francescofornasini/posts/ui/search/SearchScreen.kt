@@ -1,4 +1,4 @@
-package com.francescofornasini.posts.search
+package com.francescofornasini.posts.ui.search
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
