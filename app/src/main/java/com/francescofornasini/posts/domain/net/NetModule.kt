@@ -16,6 +16,8 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+private val netJson = Json { ignoreUnknownKeys = true }
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetModule {
@@ -30,7 +32,7 @@ object NetModule {
 
     @Provides
     @Singleton
-    @Named("libHttpClient")
+    @Named("httpClient")
     fun httpClient(@Named("log") logInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(logInterceptor)
@@ -40,11 +42,10 @@ object NetModule {
     @Singleton
     @Named("jsonConverterFactory")
     fun converterFactory(): Converter.Factory =
-        Json.asConverterFactory("application/json".toMediaType())
+        netJson.asConverterFactory("application/json".toMediaType())
 
     @Provides
     @Singleton
-    @Named("libRetrofit")
     fun retrofit(
         @Named("httpClient") okHttpClient: OkHttpClient,
         @Named("jsonConverterFactory") converterFactory: Converter.Factory

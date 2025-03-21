@@ -11,7 +11,7 @@ interface Api {
     @GET("posts")
     suspend fun getPosts(
         @Query("_start") start: Int,
-        @Query("_size") size: Int,
+        @Query("_limit") size: Int,
         @Query("body_like") query: String?
     ): List<Post>
 

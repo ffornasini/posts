@@ -1,7 +1,12 @@
 package com.francescofornasini.posts.ui.search
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,5 +17,13 @@ object Search
 fun SearchScreen(
     searchViewModel: SearchViewModel = hiltViewModel()
 ) {
-    SearchContent()
+    var query by rememberSaveable { mutableStateOf("") }
+    val posts = searchViewModel.posts[query.trim().ifBlank { null }].collectAsLazyPagingItems()
+
+    SearchContent(
+        query = query,
+        posts = posts,
+        onQueryChange = { query = it },
+
+    )
 }
