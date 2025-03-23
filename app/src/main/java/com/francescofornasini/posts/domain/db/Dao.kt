@@ -19,6 +19,9 @@ interface Dao {
     @Query("SELECT * FROM post")
     fun getPosts(): Flow<List<DbPost>>
 
+    @Query("SELECT * FROM post WHERE id=:id")
+    suspend fun getPost(id: Long): DbPost?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHint(hint: DbHint)
 

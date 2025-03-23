@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -25,8 +26,20 @@ class DetailViewModel @Inject constructor(
 
     val posts = GenericDataMap { id: Long ->
         flow {
-            emit(LoadingResource(null))
-            emit(SuccessResource(postRepository.getPost(id)))
+                // first value instantly to bind loading ui
+                emit(LoadingResource(null))
+
+                // cached value from favorites
+                val favorite = postRepository.getFavorite(id)
+                favorite?.let { emit(LoadingResource(favorite)) }
+
+            try {
+                // api value
+                emit(SuccessResource(postRepository.getPost(id)))
+            } catch (e: Exception) {
+                emit(ErrorResource(favorite, e))
+                if (e is CancellationException) throw e
+            }
         }
             .catch { emit(ErrorResource(null, it)) }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), LoadingResource(null))

@@ -6,6 +6,7 @@ import com.francescofornasini.posts.domain.db.Dao
 import com.francescofornasini.posts.domain.net.Api
 import com.francescofornasini.posts.domain.vo.Post
 import com.francescofornasini.posts.domain.vo.toDbPost
+import com.francescofornasini.posts.domain.vo.toPost
 import javax.inject.Inject
 
 private const val PageSize = 24
@@ -29,9 +30,10 @@ class PostRepository @Inject constructor(
         }
     )
 
-    fun getFavorites() = dao.getPosts()
-
     suspend fun getPost(id: Long) = api.getPost(id)
+
+    fun getFavorites() = dao.getPosts()
+    suspend fun getFavorite(id: Long) = dao.getPost(id)?.toPost()
     suspend fun addFavorite(post: Post) = dao.insertPost(post.toDbPost())
     suspend fun removeFavorite(id: Long) = dao.deletePost(id)
 }
