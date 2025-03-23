@@ -24,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
@@ -92,10 +91,11 @@ fun SearchContent(
                     items(hints) { hint ->
                         HintItem(
                             hint = hint,
-                            modifier = Modifier.clickable {
-                                onQueryChange(hint)
-                                searchBarExpanded = false
-                            })
+                            modifier = Modifier
+                                .clickable {
+                                    onQueryChange(hint)
+                                    searchBarExpanded = false
+                                })
                     }
                 }
 
@@ -107,14 +107,16 @@ fun SearchContent(
             contentPadding = PaddingValues(bottom = padding.calculateBottomPadding()),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = padding.calculateTopPadding() +  8.dp)
+                .padding(top = padding.calculateTopPadding() + 8.dp)
         ) {
             if (posts.itemCount > 0)
                 item {
                     Text(
                         text = stringResource(R.string.search_results),
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(horizontal = 16.dp).padding(top= 16.dp, bottom = 8.dp)
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp, bottom = 8.dp)
                     )
                 }
 
