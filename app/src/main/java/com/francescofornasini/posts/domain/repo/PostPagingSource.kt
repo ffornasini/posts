@@ -23,7 +23,7 @@ class PostPagingSource(
             val response = api.getPosts(start = pageNumber * pageSize, size = pageSize, query = query)
             val prevKey = if (pageNumber > 0) pageNumber - 1 else null
 
-            val nextKey = if (response.isNotEmpty()) pageNumber + 1 else null
+            val nextKey = if (response.size < pageSize) null else pageNumber + 1
             LoadResult.Page(
                 itemsBefore = pageNumber * pageSize,
                 data = response,
