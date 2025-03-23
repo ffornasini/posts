@@ -31,7 +31,7 @@ class PostRepository @Inject constructor(
 
     suspend fun getPost(id: Long) = api.getPost(id)
 
-    suspend fun getFavorites() = dao.getPosts()
+    fun getFavorites() = dao.getPosts()
 
     suspend fun addFavorite(post: Post) = dao.insertPost(
         DbPost(

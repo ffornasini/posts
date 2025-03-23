@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                         FavoriteScreen(navController)
                     }
                     composable<Detail> { backStackEntry ->
-                        DetailScreen(navController, backStackEntry.toRoute<Detail>())
+                        DetailScreen(backStackEntry.toRoute<Detail>())
                     }
                 }
             }

@@ -16,5 +16,5 @@ interface Api {
     ): List<Post>
 
     @GET("posts/{id}")
-    suspend fun getPost(@Path("id") id: Long): List<Post>
+    suspend fun getPost(@Path("id") id: Long): Post
 }

@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.francescofornasini.posts.ui.common.BrandNavigationBar
+import com.francescofornasini.posts.ui.detail.Detail
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -27,6 +28,7 @@ fun SearchScreen(
         query = query,
         posts = posts,
         onQueryChange = { query = it },
+        onPostSelect = { navController.navigate(Detail(it)) },
         navigationBar = { BrandNavigationBar(navController) }
     )
 }

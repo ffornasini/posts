@@ -26,6 +26,7 @@ fun SearchContent(
     query: String,
     posts: LazyPagingItems<Post>,
     onQueryChange: (String) -> Unit,
+    onPostSelect: (Long) -> Unit,
     navigationBar: @Composable () -> Unit
 ) {
 
@@ -52,7 +53,11 @@ fun SearchContent(
                 key = posts.itemKey { it.id }
             ) { index ->
                 val post = posts[index]
-                Text(text = "content${post?.id}", modifier = Modifier.padding(16.dp))
+                Text(text = "content${post?.id}", modifier = Modifier.padding(16.dp).clickable { post?.id?.let {
+                    onPostSelect(
+                        it
+                    )
+                } })
             }
         }
     }
