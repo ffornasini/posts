@@ -21,7 +21,7 @@ fun DetailScreen(
     val post by detailViewModel.posts[route.id].collectAsStateWithLifecycle()
     val isFavorite by detailViewModel.favorites[route.id].collectAsStateWithLifecycle()
 
-    val (toggleFavoriteResult, toggleFavorite) = rememberResult {
+    val (toggleFavoriteResult, toggleFavorite) = rememberResult { ->
         if (post is SuccessResource) {
             val localPost = post.data ?: throw IllegalStateException("null Post")
 

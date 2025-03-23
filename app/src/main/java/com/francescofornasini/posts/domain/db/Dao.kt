@@ -28,6 +28,6 @@ interface Dao {
     @Query("DELETE FROM hint")
     suspend fun deleteHints()
 
-    @Query("SELECT * FROM hint ORDER BY time ASC")
+    @Query("SELECT * FROM hint ORDER BY time DESC")
     fun getHints(): Flow<List<DbHint>>
 }

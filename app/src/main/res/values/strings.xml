@@ -3,4 +3,13 @@
     <string name="section_title_search">Search</string>
     <string name="section_title_favorite">Favorite</string>
     <string name="action_favorite">favorite</string>
+    <string name="search_placeholder">Search in title</string>
+    <string name="action_back">back</string>
+    <string name="action_search">search</string>
+    <string name="action_more">more</string>
+    <string name="search_setting_confirm">OK</string>
+    <string name="search_setting_dismiss">Cancel</string>
+    <string name="action_clear">clear</string>
+    <string name="search_setting_clear_text">If you proceed, all your search queries will be deleted</string>
+    <string name="search_setting_clear_title">Clear search hints?</string>
 </resources>
