@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -46,6 +47,7 @@ fun SearchInputField(
 ) {
     var textFieldValue by remember(query, searchBarExpanded) { mutableStateOf(query.orEmpty()) }
     val focusRequester = remember { FocusRequester() }
+    val focusedTextColor = TextFieldDefaults.colors().focusedTextColor
 
     LaunchedEffect(searchBarExpanded) {
         if (searchBarExpanded) {
@@ -65,39 +67,50 @@ fun SearchInputField(
                 imageVector = if (searchBarExpanded) {
                     Icons.AutoMirrored.Filled.ArrowBack
                 } else {
-                    Icons.Default.Search
+                    Icons.Default.MoreVert
                 },
                 contentDescription = stringResource(
                     if (searchBarExpanded) {
                         R.string.action_back
                     } else {
-                        R.string.action_search
+                        R.string.action_more
                     }
                 ),
+                tint = focusedTextColor,
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable {
-                        onSearchBarExpandedChange(!searchBarExpanded)
+                        if (searchBarExpanded) {
+                            onSearchBarExpandedChange(false)
+                        } else {
+                            onMoreSelect()
+                        }
                     }
                     .padding(8.dp)
             )
-
         },
         trailingIcon = {
-            val showMore = !searchBarExpanded || textFieldValue.isEmpty()
+            val showSearch = !searchBarExpanded || textFieldValue.isEmpty()
 
             Icon(
-                imageVector = if (showMore) {
-                    Icons.Default.MoreVert
+                imageVector = if (showSearch) {
+                    Icons.Default.Search
                 } else {
                     Icons.Default.Clear
                 },
-                contentDescription = stringResource(R.string.action_more),
+                contentDescription = stringResource(
+                    if (showSearch) {
+                        R.string.action_search
+                    } else {
+                        R.string.action_clear
+                    }
+                ),
+                tint = focusedTextColor,
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable {
-                        if (showMore) {
-                            onMoreSelect()
+                        if (showSearch) {
+                            onSearchBarExpandedChange(!searchBarExpanded)
                         } else {
                             textFieldValue = ""
                         }
@@ -120,12 +133,18 @@ fun SearchInputField(
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
-            errorContainerColor = Color.Transparent
+            errorContainerColor = Color.Transparent,
+            disabledTextColor = focusedTextColor
         ),
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(focusRequester)
+            .clip(RoundedCornerShape(28.dp))
             .clickable(enabled = !searchBarExpanded) {
                 onSearchBarExpandedChange(true)
             }

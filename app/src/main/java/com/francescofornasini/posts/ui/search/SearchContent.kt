@@ -2,6 +2,7 @@
 
 package com.francescofornasini.posts.ui.search
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -45,6 +46,11 @@ fun SearchContent(
 
     Scaffold(
         topBar = {
+            val searchBarPadding by animateDpAsState(
+                targetValue = if (searchBarExpanded) 0.dp else 16.dp,
+                label = "SearchBar padding"
+            )
+
             SearchBar(
                 inputField = {
                     SearchInputField(
@@ -56,7 +62,8 @@ fun SearchContent(
                     )
                 },
                 expanded = searchBarExpanded,
-                onExpandedChange = { searchBarExpanded = it }
+                onExpandedChange = { searchBarExpanded = it },
+                modifier = Modifier.padding(horizontal = searchBarPadding)
             ) {
                 LazyColumn {
                     items(hints) { hint ->
