@@ -4,13 +4,18 @@ package com.francescofornasini.posts.ui.search
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
@@ -25,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.francescofornasini.posts.R
@@ -59,46 +65,55 @@ fun SearchContent(
                 label = "SearchBar padding"
             )
 
-            SearchBar(
-                inputField = {
-                    SearchInputField(
-                        query = query,
-                        searchBarExpanded = searchBarExpanded,
-                        onQueryChange = onQueryChange,
-                        onSearchBarExpandedChange = { searchBarExpanded = it },
-                        onMoreSelect = { showSettingDialog = true }
-                    )
-                },
-                expanded = searchBarExpanded,
-                onExpandedChange = { searchBarExpanded = it },
-                colors = SearchBarDefaults.colors(
-                    dividerColor = Color.Transparent
-                ),
-                modifier = Modifier.padding(horizontal = searchBarPadding)
-            ) {
-                LazyColumn(
-                    modifier = Modifier.imePadding()
+            Column {
+                SearchBar(
+                    inputField = {
+                        SearchInputField(
+                            query = query,
+                            searchBarExpanded = searchBarExpanded,
+                            onQueryChange = onQueryChange,
+                            onSearchBarExpandedChange = { searchBarExpanded = it },
+                            onMoreSelect = { showSettingDialog = true }
+                        )
+                    },
+                    expanded = searchBarExpanded,
+                    onExpandedChange = { searchBarExpanded = it },
+                    colors = SearchBarDefaults.colors(
+                        dividerColor = Color.Transparent
+                    ),
+                    modifier = Modifier.padding(horizontal = searchBarPadding)
                 ) {
-                    if (hints.isNotEmpty())
-                        item {
-                            Text(
-                                text = stringResource(R.string.search_history),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                            )
-                        }
+                    LazyColumn(
+                        modifier = Modifier.imePadding()
+                    ) {
+                        if (hints.isNotEmpty())
+                            item {
+                                Text(
+                                    text = stringResource(R.string.search_history),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                                )
+                            }
 
-                    items(hints) { hint ->
-                        HintItem(
-                            hint = hint,
-                            modifier = Modifier
-                                .clickable {
-                                    onQueryChange(hint)
-                                    searchBarExpanded = false
-                                })
+                        items(hints) { hint ->
+                            HintItem(
+                                hint = hint,
+                                modifier = Modifier
+                                    .clickable {
+                                        onQueryChange(hint)
+                                        searchBarExpanded = false
+                                    })
+                        }
                     }
                 }
 
+                if (posts.loadState.refresh == LoadState.Loading) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
+                    )
+                }
             }
         },
         bottomBar = navigationBar
@@ -109,7 +124,19 @@ fun SearchContent(
                 .fillMaxSize()
                 .padding(top = padding.calculateTopPadding() + 8.dp)
         ) {
-            if (posts.itemCount > 0)
+            if (posts.loadState.isIdle && posts.itemCount == 0) {
+                item {
+                    Text(
+                        text = stringResource(R.string.search_results_empty),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp, bottom = 8.dp)
+                    )
+                }
+            }
+
+            if (posts.itemCount > 0) {
                 item {
                     Text(
                         text = stringResource(R.string.search_results),
@@ -119,6 +146,7 @@ fun SearchContent(
                             .padding(top = 16.dp, bottom = 8.dp)
                     )
                 }
+            }
 
             items(
                 count = posts.itemCount,
@@ -132,6 +160,20 @@ fun SearchContent(
                             post?.id?.let { onPostSelect(it) }
                         }
                 )
+            }
+            item {
+                if (posts.loadState.hasError) {
+                    ElevatedCard(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Box(Modifier.padding(8.dp)) {
+                            Text(
+                                text = stringResource(R.string.generic_pagination_error),
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    }
+                }
             }
         }
     }

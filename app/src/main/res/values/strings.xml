@@ -18,6 +18,8 @@
     <string name="action_history">history</string>
     <string name="search_history">History</string>
     <string name="search_results">Posts</string>
-    <string name="generic_error">Something went wrong trying to fetch your data. Please retry later</string>
-    <string name="generic_error_with_cache">Something went wrong trying to fetch your data. Now you\'re seeing the cached version</string>
+    <string name="generic_error">Something went wrong trying to fetch the posts. Please retry later</string>
+    <string name="generic_error_with_cache">Something went wrong trying to fetch the posts. Now you\'re seeing the cached version</string>
+    <string name="generic_pagination_error">Something went wrong trying to fetch the posts. You can tap on the bottom navigation search tab to reload this page and retry</string>
+    <string name="search_results_empty">No match found for this search key</string>
 </resources>

@@ -31,9 +31,11 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.francescofornasini.posts.R
 
@@ -45,13 +47,22 @@ fun SearchInputField(
     onQueryChange: (String?) -> Unit,
     onMoreSelect: () -> Unit
 ) {
-    var textFieldValue by remember(query, searchBarExpanded) { mutableStateOf(query.orEmpty()) }
+    var textFieldValue by remember(query, searchBarExpanded) {
+        mutableStateOf(
+            TextFieldValue(
+                text = query.orEmpty(),
+                selection = TextRange(query.orEmpty().length)
+            )
+        )
+    }
     val focusRequester = remember { FocusRequester() }
     val focusedTextColor = TextFieldDefaults.colors().focusedTextColor
 
     LaunchedEffect(searchBarExpanded) {
         if (searchBarExpanded) {
             focusRequester.requestFocus()
+        } else {
+            textFieldValue = textFieldValue.copy(selection = TextRange(0))
         }
     }
 
@@ -90,7 +101,7 @@ fun SearchInputField(
             )
         },
         trailingIcon = {
-            val showSearch = !searchBarExpanded || textFieldValue.isEmpty()
+            val showSearch = !searchBarExpanded || textFieldValue.text.isEmpty()
 
             Icon(
                 imageVector = if (showSearch) {
@@ -113,7 +124,7 @@ fun SearchInputField(
                             onQueryChange(null)
                             onSearchBarExpandedChange(!searchBarExpanded)
                         } else {
-                            textFieldValue = ""
+                            textFieldValue = textFieldValue.copy(text = "")
                         }
                     }
                     .padding(8.dp)
@@ -126,7 +137,7 @@ fun SearchInputField(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                onQueryChange(textFieldValue)
+                onQueryChange(textFieldValue.text)
                 onSearchBarExpandedChange(false)
             },
         ),
@@ -153,7 +164,7 @@ fun SearchInputField(
                 if (it.key != Key.Enter) {
                     return@onKeyEvent false
                 }
-                onQueryChange(textFieldValue)
+                onQueryChange(textFieldValue.text)
                 onSearchBarExpandedChange(false)
                 true
             },

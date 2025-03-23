@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.francescofornasini.posts.ui.common.SuccessResource
+import com.francescofornasini.posts.ui.common.LoadingResource
 import com.francescofornasini.posts.ui.common.rememberResult
 import kotlinx.serialization.Serializable
 
@@ -22,7 +22,7 @@ fun DetailScreen(
     val isFavorite by detailViewModel.favorites[route.id].collectAsStateWithLifecycle()
 
     val (toggleFavoriteResult, toggleFavorite) = rememberResult { ->
-        if (post is SuccessResource) {
+        if (post !is LoadingResource) {
             val localPost = post.data ?: throw IllegalStateException("null Post")
 
             when (isFavorite) {
