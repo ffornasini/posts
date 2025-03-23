@@ -19,3 +19,15 @@ data class DbPost(
     val title: String,
     val body: String
 )
+
+fun Post.toDbPost() = DbPost(
+    id = id,
+    title = title.orEmpty(),
+    body = body.orEmpty()
+)
+
+fun DbPost.toPost() = Post(
+    id = id,
+    title = title,
+    body = body
+)
