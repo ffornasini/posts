@@ -1,4 +1,4 @@
-package com.francescofornasini.posts.domain.repo
+package com.francescofornasini.posts.ui.common
 
 import kotlinx.coroutines.flow.Flow
 

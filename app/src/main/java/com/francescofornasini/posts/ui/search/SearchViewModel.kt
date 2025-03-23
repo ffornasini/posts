@@ -3,7 +3,7 @@ package com.francescofornasini.posts.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.francescofornasini.posts.domain.repo.GenericDataMap
+import com.francescofornasini.posts.ui.common.GenericDataMap
 import com.francescofornasini.posts.domain.repo.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

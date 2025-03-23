@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.francescofornasini.posts.ui.common.BrandNavigationBar
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,6 +17,7 @@ object Search
 
 @Composable
 fun SearchScreen(
+    navController: NavController,
     searchViewModel: SearchViewModel = hiltViewModel()
 ) {
     var query by rememberSaveable { mutableStateOf("") }
@@ -24,6 +27,6 @@ fun SearchScreen(
         query = query,
         posts = posts,
         onQueryChange = { query = it },
-
+        navigationBar = { BrandNavigationBar(navController) }
     )
 }

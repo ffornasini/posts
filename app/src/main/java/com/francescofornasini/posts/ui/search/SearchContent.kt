@@ -25,7 +25,8 @@ import com.francescofornasini.posts.domain.vo.Post
 fun SearchContent(
     query: String,
     posts: LazyPagingItems<Post>,
-    onQueryChange: (String) -> Unit
+    onQueryChange: (String) -> Unit,
+    navigationBar: @Composable () -> Unit
 ) {
 
     var searchBarExpanded by remember { mutableStateOf(false) }
@@ -39,7 +40,8 @@ fun SearchContent(
                 expanded = searchBarExpanded,
                 onExpandedChange = { searchBarExpanded = it }
             ) { }
-        }
+        },
+        bottomBar = navigationBar
     ) { padding ->
         LazyColumn(
             contentPadding = padding,

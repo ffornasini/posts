@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.francescofornasini.posts.ui.detail.Detail
 import com.francescofornasini.posts.ui.detail.DetailScreen
 import com.francescofornasini.posts.ui.favorite.Favorite
@@ -30,13 +31,13 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = Search) {
                     composable<Search> {
-                        SearchScreen()
+                        SearchScreen(navController)
                     }
                     composable<Favorite> {
-                        FavoriteScreen()
+                        FavoriteScreen(navController)
                     }
-                    composable<Detail> {
-                        DetailScreen()
+                    composable<Detail> { backStackEntry ->
+                        DetailScreen(navController, backStackEntry.toRoute<Detail>())
                     }
                 }
             }
