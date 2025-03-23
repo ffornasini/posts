@@ -40,7 +40,7 @@ fun SearchScreen(
         posts = posts,
         hints = hints,
         onQueryChange = {
-            val newQuery = it.trim().ifBlank { null }
+            val newQuery = it?.trim()?.ifBlank { null }
             query = newQuery
             newQuery?.let(addHint)
         },

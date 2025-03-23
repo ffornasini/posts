@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.francescofornasini.posts.ui.common.BrandNavigationBar
+import com.francescofornasini.posts.ui.detail.Detail
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,12 +16,13 @@ object Favorite
 fun FavoriteScreen(
     navController: NavController,
     favoriteViewModel: FavoriteViewModel = hiltViewModel()
-    ) {
+) {
 
     val posts by favoriteViewModel.favorites.collectAsStateWithLifecycle()
 
     FavoriteContent(
         posts = posts,
+        onPostSelect = { navController.navigate(Detail(it)) },
         navigationBar = { BrandNavigationBar(navController) }
     )
 }

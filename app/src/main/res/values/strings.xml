@@ -12,4 +12,9 @@
     <string name="action_clear">clear</string>
     <string name="search_setting_clear_text">If you proceed, all your search queries will be deleted</string>
     <string name="search_setting_clear_title">Clear search hints?</string>
+    <string name="default_post_title">Unnamed post</string>
+    <string name="default_post_body">Empty body</string>
+    <string name="action_history">history</string>
+    <string name="search_history">History</string>
+    <string name="search_results">Results</string>
 </resources>

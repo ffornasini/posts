@@ -42,7 +42,7 @@ fun SearchInputField(
     query: String?,
     searchBarExpanded: Boolean,
     onSearchBarExpandedChange: (Boolean) -> Unit,
-    onQueryChange: (String) -> Unit,
+    onQueryChange: (String?) -> Unit,
     onMoreSelect: () -> Unit
 ) {
     var textFieldValue by remember(query, searchBarExpanded) { mutableStateOf(query.orEmpty()) }
@@ -110,6 +110,7 @@ fun SearchInputField(
                     .clip(CircleShape)
                     .clickable {
                         if (showSearch) {
+                            onQueryChange(null)
                             onSearchBarExpandedChange(!searchBarExpanded)
                         } else {
                             textFieldValue = ""
@@ -129,7 +130,7 @@ fun SearchInputField(
                 onSearchBarExpandedChange(false)
             },
         ),
-        maxLines = 1,
+        singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
