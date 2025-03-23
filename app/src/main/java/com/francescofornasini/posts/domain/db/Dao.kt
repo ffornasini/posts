@@ -16,7 +16,7 @@ interface Dao {
     @Query("DELETE FROM post WHERE id ==:id")
     suspend fun deletePost(id: Long)
 
-    @Query("SELECT * FROM post")
+    @Query("SELECT * FROM post ORDER BY title ASC")
     fun getPosts(): Flow<List<DbPost>>
 
     @Query("SELECT * FROM post WHERE id=:id")
