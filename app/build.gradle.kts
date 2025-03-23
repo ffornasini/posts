@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.serializer)
     implementation(libs.squareup.okhttp3.logging)
+    implementation(libs.androidx.ui.text.google.fonts)
 
     ksp(libs.google.hilt.compiler)
     ksp(libs.androidx.room.compiler)
