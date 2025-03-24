@@ -1,6 +1,8 @@
 [versions]
 agp = "8.9.0"
 appcompat = "1.7.0"
+hamcrestLibrary = "3.0"
+jetbrainsKotlinxCoroutinesTest = "1.10.1"
 kotlin = "2.0.21"
 hilt = "2.51.1"
 coreKtx = "1.15.0"
@@ -11,6 +13,7 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 ksp = "2.0.21-1.0.27"
+mockk = "1.13.17"
 room = "2.6.1"
 paging = "3.3.6"
 navigation = "2.8.9"
@@ -23,6 +26,8 @@ uiTextGoogleFonts = "1.7.8"
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrestLibrary" }
+jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "jetbrainsKotlinxCoroutinesTest" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -42,10 +47,12 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref="room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref="room" }
 androidx-paging = { group = "androidx.paging", name = "paging-runtime", version.ref="paging" }
+androidx-paging-test = { group = "androidx.paging", name = "paging-testing", version.ref="paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref="paging" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref="navigation" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+mockk-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 squareup-retrofit-serializer = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit"}
 squareup-okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3Logging" }

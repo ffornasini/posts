@@ -43,6 +43,11 @@ android {
         buildConfig = true
         compose = true
     }
+    testOptions {
+        tasks.withType<Test> {
+            jvmArgs("-XX:+EnableDynamicAgentLoading")
+        }
+    }
 }
 
 dependencies {
@@ -73,6 +78,10 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockk.mockk)
+    testImplementation(libs.androidx.paging.test)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.hamcrest.library)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
