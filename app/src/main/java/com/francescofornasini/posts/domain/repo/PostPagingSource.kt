@@ -8,7 +8,17 @@ import retrofit2.HttpException
 import java.io.IOException
 
 /**
- * Taken from https://developer.android.com/reference/kotlin/androidx/paging/PagingSource
+ * A custom implementation of [PagingSource] for loading pages of posts from an API.
+ *
+ * @param api The [Api] instance used to fetch posts data.
+ * @param pageSize The number of posts to load per page.
+ * @param query An optional search query to filter the posts.
+
+ * Supports paginated fetching of posts from the API.
+ * Handles API errors gracefully, emitting appropriate error results.
+ * Dynamically adjusts keys for navigating between pages based on loaded data.
+ *
+ * Adapted from https://developer.android.com/reference/kotlin/androidx/paging/PagingSource
  */
 class PostPagingSource(
     private val api: Api,
@@ -20,7 +30,8 @@ class PostPagingSource(
         return try {
             val pageNumber = params.key ?: 0
 
-            val response = api.getPosts(start = pageNumber * pageSize, size = pageSize, query = query)
+            val response =
+                api.getPosts(start = pageNumber * pageSize, size = pageSize, query = query)
             val prevKey = if (pageNumber > 0) pageNumber - 1 else null
 
             val nextKey = if (response.size < pageSize) null else pageNumber + 1

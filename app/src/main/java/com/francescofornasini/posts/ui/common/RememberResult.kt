@@ -10,6 +10,12 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 
+/**
+ * Execute a suspending operation in this composable scope returning the execution status as a Resource
+ *
+ * @param fn the operation
+ * @return a resource with the current status of the operation and a "safe to call" function that executes the operation
+ */
 @Composable
 fun <T, U> rememberResult(
     fn: suspend (U) -> T
@@ -33,6 +39,9 @@ fun <T, U> rememberResult(
     return result to resultFn
 }
 
+/**
+ * @see [rememberResult]
+ */
 @Composable
 fun <T> rememberResult(
     fn: suspend () -> T

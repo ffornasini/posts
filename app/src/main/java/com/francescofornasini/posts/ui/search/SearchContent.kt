@@ -2,6 +2,7 @@
 
 package com.francescofornasini.posts.ui.search
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,14 +30,36 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.francescofornasini.posts.R
 import com.francescofornasini.posts.domain.vo.Post
 import com.francescofornasini.posts.ui.common.PostItem
+import com.francescofornasini.posts.ui.theme.PostsTheme
+import kotlinx.coroutines.flow.flowOf
 
+/**
+ * Composable function for rendering the search screen's content.
+ *
+ * @param query The current search query.
+ * @param posts A [LazyPagingItems] object containing the paginated list of posts matching the query.
+ * @param hints A list of search history hints for quick access to previous queries.
+ * @param onQueryChange Callback function invoked when the search query is updated.
+ * @param onClearAllHints Callback function invoked to clear all search history hints.
+ * @param onPostSelect Callback function invoked when a post is selected. It passes the selected post's ID as a parameter.
+ * @param navigationBar A composable function defining the navigation bar at the bottom of the screen.
+ *
+ * - Dynamically updates the UI based on the state of the query, posts, and search hints.
+ * - Ensures smooth animations for expanding/collapsing the search bar.
+ * - Displays search history and manages user interactions with search hints.
+ * - Handles pagination states, including loading, error, and idle states.
+ */
 @Composable
 fun SearchContent(
     query: String?,
@@ -60,6 +83,11 @@ fun SearchContent(
 
     Scaffold(
         topBar = {
+            /*
+                Horizontal padding needs to be applied to the SearchBar, but only when it is collapsed.
+                Since the component does not natively support this behavior, padding must be animated
+                to maintain the smoothness of the expand/collapse transition.
+            */
             val searchBarPadding by animateDpAsState(
                 targetValue = if (searchBarExpanded) 0.dp else 16.dp,
                 label = "SearchBar padding"
@@ -124,6 +152,7 @@ fun SearchContent(
                 .fillMaxSize()
                 .padding(top = padding.calculateTopPadding() + 8.dp)
         ) {
+            // empty view
             if (posts.loadState.isIdle && posts.itemCount == 0) {
                 item {
                     Text(
@@ -161,6 +190,8 @@ fun SearchContent(
                         }
                 )
             }
+
+            // error view
             item {
                 if (posts.loadState.hasError) {
                     ElevatedCard(
@@ -176,5 +207,80 @@ fun SearchContent(
                 }
             }
         }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchContentPreview() {
+
+    var query by remember { mutableStateOf<String?>("I'm interactive!") }
+    var hints by remember { mutableStateOf<List<String>>(emptyList()) }
+
+    val posts = remember(query) {
+        val results = (0L..5L).map {
+            Post(it, "title $it", "body $it")
+        }.filter { post -> query?.let { post.title?.contains(it) == true } ?: true }
+
+        flowOf(
+            PagingData.from(
+                data = results,
+                sourceLoadStates = LoadStates(
+                    refresh = LoadState.NotLoading(true),
+                    prepend = LoadState.NotLoading(true),
+                    append = LoadState.NotLoading(true)
+                )
+            )
+        )
+    }.collectAsLazyPagingItems()
+
+    PostsTheme {
+        SearchContent(
+            query = query,
+            posts = posts,
+            hints = hints,
+            onQueryChange = { newQuery ->
+                query = newQuery
+                newQuery?.trim()?.ifBlank { null }?.let {
+                    if (!hints.contains(it)) {
+                        hints = hints + it
+                    }
+                }
+            },
+            onClearAllHints = { hints = emptyList() },
+            onPostSelect = { },
+            navigationBar = { }
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchContentErrorPreview() {
+
+    val posts = remember {
+        flowOf(
+            PagingData.empty<Post>(
+                sourceLoadStates = LoadStates(
+                    refresh = LoadState.Error(IllegalStateException("mock error")),
+                    prepend = LoadState.Error(IllegalStateException("mock error")),
+                    append = LoadState.Error(IllegalStateException("mock error"))
+                )
+            )
+        )
+    }.collectAsLazyPagingItems()
+
+    PostsTheme {
+        SearchContent(
+            query = null,
+            posts = posts,
+            hints = emptyList(),
+            onQueryChange = { },
+            onClearAllHints = { },
+            onPostSelect = { },
+            navigationBar = { }
+        )
     }
 }

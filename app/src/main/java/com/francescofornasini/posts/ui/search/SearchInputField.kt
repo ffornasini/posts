@@ -1,5 +1,6 @@
 package com.francescofornasini.posts.ui.search
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -36,9 +38,31 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescofornasini.posts.R
+import com.francescofornasini.posts.ui.theme.PostsTheme
 
+/**
+ * Composable function for a customizable search input field with dynamic behaviors.
+ *
+ * @param query The current search query as a nullable string. Used to initialize the text field's value.
+ * @param searchBarExpanded Boolean indicating whether the search bar is currently expanded.
+ * @param onSearchBarExpandedChange Callback function invoked to toggle the expansion state of the search bar.
+ * @param onQueryChange Callback function invoked when the search query is updated.
+ * @param onMoreSelect Callback function invoked when the "more options" icon is clicked while the search bar is collapsed.
+ *
+ * - Displays a [TextField] for entering search queries.
+ * - Includes leading and trailing icons for navigation and actions:
+ *   - Leading icon changes based on whether the search bar is expanded (e.g., arrow back or more options).
+ *   - Trailing icon dynamically switches between search, clear, or other actions based on the current state.
+ * - Allows dynamic interaction with the search bar, enabling focus and handling keyboard events.
+ * - Uses a transparent design for the container and indicators to integrate seamlessly into various UI themes.
+ *
+ * - Automatically focuses the text field when the search bar is expanded.
+ * - Clears the text field's content or updates the query based on user actions.
+ * - Responds to keyboard action `ImeAction.Done` and handles `Key.Enter` event for query submission.
+ */
 @Composable
 fun SearchInputField(
     query: String?,
@@ -169,4 +193,38 @@ fun SearchInputField(
                 true
             },
     )
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchInputFieldPreview() {
+    PostsTheme {
+        Surface {
+            SearchInputField(
+                query = "",
+                searchBarExpanded = false,
+                onQueryChange = {},
+                onSearchBarExpandedChange = {},
+                onMoreSelect = {}
+            )
+        }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchInputFieldExpandedPreview() {
+    PostsTheme {
+        Surface {
+            SearchInputField(
+                query = "You can try me in interactive mode",
+                searchBarExpanded = true,
+                onQueryChange = {},
+                onSearchBarExpandedChange = {},
+                onMoreSelect = {}
+            )
+        }
+    }
 }

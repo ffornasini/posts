@@ -17,7 +17,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 object Search
 
-
+/**
+ * Composable function for displaying the search screen, allowing users to search posts, view suggestions,
+ * and navigate to detailed views.
+ *
+ * Delegates the rendering of the screen to [SearchContent], which displays:
+ * - The current query and related suggestions.
+ * - A list of posts matching the query.
+ * - Actions for managing search hints and selecting posts.
+ */
 @Composable
 fun SearchScreen(
     navController: NavController,

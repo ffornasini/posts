@@ -1,5 +1,8 @@
 package com.francescofornasini.posts.ui.common
 
+/**
+ *  Represents a generic resource state, designed to encapsulate data and its associated state.
+ */
 sealed class Resource<out T>(
     open val data: T?,
 )

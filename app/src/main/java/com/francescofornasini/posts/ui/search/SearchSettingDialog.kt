@@ -1,5 +1,6 @@
 package com.francescofornasini.posts.ui.search
 
+import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
@@ -8,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.francescofornasini.posts.R
+import com.francescofornasini.posts.ui.theme.PostsTheme
 
 @Composable
 fun SearchSettingDialog(
@@ -47,4 +50,16 @@ fun SearchSettingDialog(
         },
         onDismissRequest = onDismiss
     )
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchSettingDialogPreview() {
+    PostsTheme {
+        SearchSettingDialog(
+            onConfirm = {},
+            onDismiss = {}
+        )
+    }
 }

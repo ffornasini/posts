@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing the state of favorite posts and providing them to the UI.
+ */
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
     postRepository: PostRepository

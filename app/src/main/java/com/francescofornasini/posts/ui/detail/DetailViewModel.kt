@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
+/**
+ * ViewModel for managing the state and logic of the detail screen, including favorites.
+ */
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val postRepository: PostRepository
@@ -26,12 +29,12 @@ class DetailViewModel @Inject constructor(
 
     val posts = GenericDataMap { id: Long ->
         flow {
-                // first value instantly to bind loading ui
-                emit(LoadingResource(null))
+            // first value instantly to bind loading ui
+            emit(LoadingResource(null))
 
-                // cached value from favorites
-                val favorite = postRepository.getFavorite(id)
-                favorite?.let { emit(LoadingResource(favorite)) }
+            // cached value from favorites
+            val favorite = postRepository.getFavorite(id)
+            favorite?.let { emit(LoadingResource(favorite)) }
 
             try {
                 // api value

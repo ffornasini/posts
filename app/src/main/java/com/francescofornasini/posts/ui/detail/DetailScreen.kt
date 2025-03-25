@@ -13,6 +13,12 @@ data class Detail(
     val id: Long
 )
 
+/**
+ * Composable function for displaying the details of a post, with support for managing favorites.
+ *
+ * Delegates UI rendering to [DetailContent], which displays the post details, favorite toggle state,
+ *   and any related actions or error messages.
+ */
 @Composable
 fun DetailScreen(
     route: Detail,

@@ -17,6 +17,9 @@ import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
 
+/**
+ * Simple tests for the [PostPagingSource] class
+ */
 class PostPagingSourceTest {
 
     companion object {

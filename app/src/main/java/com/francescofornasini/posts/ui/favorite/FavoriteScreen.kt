@@ -12,6 +12,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 object Favorite
 
+/**
+ * Composable function for displaying the favorites screen, showing a list of favorite posts
+ * and supporting navigation to a detailed view of each post.
+ *
+ * Delegates the rendering of the screen's content to the [FavoriteContent] composable.
+ */
 @Composable
 fun FavoriteScreen(
     navController: NavController,

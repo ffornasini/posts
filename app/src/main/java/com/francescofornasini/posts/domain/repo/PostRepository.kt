@@ -11,6 +11,9 @@ import javax.inject.Inject
 
 private const val PageSize = 24
 
+/**
+ * Repository class for managing posts and favorites.
+ */
 class PostRepository @Inject constructor(
     private val api: Api,
     private val dao: Dao

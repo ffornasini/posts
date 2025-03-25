@@ -5,6 +5,9 @@ import com.francescofornasini.posts.domain.vo.DbHint
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+/**
+ * Repository class for managing search hint data.
+ */
 class HintRepository @Inject constructor(
     private val dao: Dao
 ) {
